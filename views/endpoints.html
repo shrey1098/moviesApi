@@ -1,0 +1,367 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Movies API</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="container-fluid collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/api/movies/docs">Endpoints<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About Developer</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- side navigation with api endpoints -->
+    <!-- body of each api endpoint shows the usage of the endpoint, whether api key is required or not, sample resoponse and a trial api call-->
+    <div class="container" style="margin-top: 5vh">
+        <!-- side navigation-->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action active">
+                        API Endpoints
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action" name="newRegister"
+                        onclick="show(name), hide(name)">/auth/newRegister</a>
+                    <a href="#" class="list-group-item list-group-item-action" name="google"
+                        onclick="show(name), hide(name)">/auth/google</a>
+                    <a href="#" class="list-group-item list-group-item-action" name="randomlist"
+                        onclick="show(name), hide(name)">/api/movies/randomlist</a>
+                    <a href="#" class="list-group-item list-group-item-action" name="search"
+                        onclick="show(name), hide(name)">/api/movies/search</a>
+                    <a href="#" class="list-group-item list-group-item-action" name="getmovie"
+                        onclick="show(name), hide(name)">/api/movies/getmovie</a>
+                    <a href="#" class="list-group-item list-group-item-action" name="ratingpost"
+                        onclick="show(name), hide(name)">/api/rating/post/</a>
+                    <a href="#" class="list-group-item list-group-item-action" name="ratingaveragerating"
+                        onclick="show(name), hide(name)">/api/rating/averageRating/</a>
+                </div>
+            </div>
+            <!-- body of each api endpoint -->
+            <div class="col-md-9">
+                <div class="card" id="newRegister">
+                    <div class="card-header">
+                        <h3>/auth/newRegister</h3>
+                        <div class="card-body">
+                            <p>
+                                <strong>Usage:</strong>
+                                <br>
+                                <code>POST</code>
+                                <br>
+                                <code>/auth/newRegister</code>
+                                <br>
+                                <br>
+                                <code>{
+                                    "username": string,
+                                    "password": string,
+                                    "email": string,}
+                                </code>
+                                <br>
+                                <br>
+                                <strong>Sample Response:</strong>
+                                <br>
+                                <code>{
+                                    "apikey": "api key",
+                                    "user": "email"}
+                                </code>
+                            </p>
+                            <p>
+                                <strong>Try it:</strong>
+                                <!-- user can input username email and password and api call is made-->
+                            <form action="/auth/newRegister" method="POST">
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username"
+                                        placeholder="Username">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password"
+                                        placeholder="Password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        placeholder="Email">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+
+                                </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- body of next api endpoint is hidden but will be seen when clicked on-->
+                <div class="card" id="google" style="display: none">
+                    <div class="card-header">
+                        <h3>/auth/google</h3>
+                        <div class="card-body">
+                            <p>
+                                <strong>Usage:</strong>
+                                <br>
+                                <code>POST</code>
+                                <br>
+                                <code>/auth/google</code>
+                                <br>
+                                <br>
+                            <p>Register with google account</p>
+                            <br>
+                            <br>
+                            <strong>Sample Response:</strong>
+                            <br>
+                            <code>{
+                                        "apikey": "api key",
+                                        "user": "email"}
+                                    </code>
+                            </p>
+                            <p>
+                                <strong>Try it:</strong>
+                                <br>
+                                <br>
+                                <!-- button linked to /auth/google-->
+                                <a href="/auth/google" class="btn btn-primary" name="user" id="user">Register with Google</a>
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- body of next api endpoint is hidden but will be seen when clicked on-->
+                <div class="card" id="randomlist" style="display: none">
+                    <div class="card-header">
+                        <h3>/api/movies/randomlist</h3>
+                        <div class="card-body">
+                            <p>
+                                <strong>Usage:</strong>
+                                <br>
+                                <code>GET</code>
+                                <br>
+                                <code>/api/movies/randomlist/:length?apiToken=</code>
+                            <p>Generate a list of random movies.</p>
+                            <br>
+                            <br>
+                            <strong>Sample Response:</strong>
+                            <br>
+                            <code>{
+                                    "movies": [
+                                        {
+                                            "id": int,
+                                            "title": string,
+                                            "release_date": Date,
+                                            "runtime": int,
+                                            "genre": string,
+                                            "overview": string,
+                                        }
+                                    ]
+                                }
+                                </code>
+                            <br>
+                            <br>
+                            <strong>Try it:</strong>
+                            <br>
+                            <br>
+
+                            <!-- button linked to /api/movies/randomlist-->
+                            <a href="/api/movies/randomlist/10?apiToken=r~8x0ydeEFvhiIq/whizEFGyj"
+                                class="btn btn-primary">Get Random Movies</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- body of next api endpoint is hidden but will be seen when clicked on-->
+                <div class="card" id="search" style="display: none">
+                    <div class="card-header">
+                        <h3>/api/movies/search</h3>
+                        <div class="card-body">
+                            <p>
+                                <strong>Usage:</strong>
+                                <br>
+                                <code>GET</code>
+                                <br>
+                                <code>/api/movies/search?title=&genre=&limit=&apiToken=</code>
+                            <p>Search for movies with title or genre or both</p>
+                            <p> Use limit to limit the number of responses- Deafult is 10</p>
+                            <br>
+                            <br>
+                            <strong>Sample Response:</strong>
+                            <br>
+                            <code>{
+                                    "movies": [
+                                        {
+                                            "id": int,
+                                            "title": string,
+                                            "release_date": Date,
+                                            "runtime": int,
+                                            "genre": string,
+                                            "overview": string,
+                                        }
+                                    ]
+                                }
+                                </code>
+                            <br>
+                            <br>
+                            <strong>Try it:</strong>
+                            <br>
+                            <br>
+                            <p>search movies with titile contains-dogs and genre-comedy</p>
+                            <!-- button linked to /api/movies/search-->
+                            <a href="/api/movies/search?apiToken=r~8x0ydeEFvhiIq/whizEFGyj&title=dog&genre=comedy"
+                                class="btn btn-primary">Search Movies</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- body of next api endpoint is hidden but will be seen when clicked on-->
+                <div class="card" id="getmovie" style="display: none">
+                    <div class="card-header">
+                        <h3>/api/movies/getmovie</h3>
+                        <div class="card-body">
+                            <p>
+                                <strong>Usage:</strong>
+                                <br>
+                                <code>GET</code>
+                                <br>
+                                <code>/api/movies/getmovie?title=&id=&apiToken=</code>
+                            <p>Get a movie by id or exact title</p>
+                            <br>
+                            <br>
+                            <strong>Sample Response:</strong>
+                            <br>
+                            <code>{
+                                "id": int,
+                                "title": string,
+                                "release_date": Date,
+                                "runtime": int,
+                                "genre": string,
+                                "overview": string,
+                                }
+                                </code>
+                            <br>
+                            <br>
+                            <strong>Try it:</strong>
+                            <br>
+                            <br>
+                            <p>get movie with id of 121</p>
+                            <!-- button linked to /api/movies/:id-->
+                            <a href="/api/movies/getmovie?id=121&apiToken=r~8x0ydeEFvhiIq/whizEFGyj"
+                                class="btn btn-primary">Get Movie</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- body of next api endpoint is hidden but will be seen when clicked on-->
+                <div class="card" id="ratingpost" style="display: none">
+                    <div class="card-header">
+                        <h3>/api/movies/rating/post</h3>
+                        <div class="card-body">
+                            <p>
+                                <strong>Usage:</strong>
+                                <br>
+                                <code>POST</code>
+                                <br>
+                                <code>/api/rating/post/:movieId/:rating?apiToken=</code>
+                            <p>Rate a movie between 1-5</p>
+                            <br>
+                            <br>
+                            <strong>Sample Response:</strong>
+                            <br>
+                            <code>{
+                                "message": string,
+                                "rating": int,
+                                }
+                                </code>
+                            <br>
+                            <br>
+                            <strong>Try it:</strong>
+                            <br>
+                            <br>
+                            <p>rate movie with id of 121</p>
+                            <!-- button linked to /api/movies/rating-->
+                            <form action="/api/rating/post/121/4?apiToken=r~8x0ydeEFvhiIq/whizEFGyj" method="post">
+                                <button class="btn btn-primary one" type="submit" name="rate", id="rate" value="rate">Rate Movie</button>
+                            </form>
+                            
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- body of next api endpoint is hidden but will be seen when clicked on-->
+                <div class="card" id="ratingaveragerating" style="display: none">
+                    <div class="card-header">
+                        <h3>/api/rating/averageRating</h3>
+                        <div class="card-body">
+                            <p>
+                                <strong>Usage:</strong>
+                                <br>
+                                <code>GET</code>
+                                <br>
+                                <code>/api/rating/averageRating/:movieId</code>
+                            <p>Get the average rating of a movie</p>
+                            <p> This is open endpoint, no need for apiToken</p>
+                            <br>
+                            <br>
+                            <strong>Sample Response:</strong>
+                            <br>
+                            <code>{
+                                "title": string,
+                                "averageRating": int,
+                                }
+                                </code>
+                            <br>
+                            <br>
+                            <strong>Try it:</strong>
+                            <br>
+                            <br>
+                            <p>get average rating of movie with id of 121</p>
+                            <!-- button linked to /api/movies/rating-->
+                            <a href="/api/rating/averageRating/121"
+                                class="btn btn-primary">Get Rating</a>
+                            </p>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // function when clicked, name of the <a> is passed to the function and is used as id of a div to whcih display is set to block and other are hidden
+    function show(name) {
+        var x = document.getElementById(name);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        }
+    }
+    function hide(name) {
+        // function to hide the divs other the one clicked
+        var x = document.getElementById(name);
+        const arr = ['newRegister', 'google', 'randomlist', 'search', 'getmovie', 'ratingpost', 'ratingaveragerating'];
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] != name) {
+                var y = document.getElementById(arr[i]);
+                y.style.display = "none";
+            }
+        }
+
+    }
+</script>

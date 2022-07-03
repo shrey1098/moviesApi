@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
 const userSchema= mongoose.Schema({
-googleId: {type: String,},
+googleId: {type: String,
+required: true},
 name: { firstName:{type: String},
-    familyName: {type: String}},
+    familyName: {type: String}, required:false},
 email: {
-type: String, 
-match: /[a-z0–9!#$%&’*+/=?^_`{|}~-]+(?:\.[a-z0–9!#$%&’*+/=?^_`{|}~-]+)*@(?:[a-z0–9](?:[a-z0–9-]*[a-z0–9])?\.)+[a-z0–9](?:[a-z0–9-]*[a-z0–9])?/,
+type: String, required:true,
 },
 apiKey:{type:String},
 });

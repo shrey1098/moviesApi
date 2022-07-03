@@ -2,8 +2,10 @@ import express from 'express';
 import { verifyToken } from '../middlewres/verifyToken.js';
 import { randomlist, search, getmovie } from '../controllers/movie_lists.js';
 
+import path from 'path';
+const router = express.Router()
 
-const router = express.Router();
+const __dirname = path.resolve(path.dirname('')); 
 
 // get a random list of movies of a certain length given by user
 // usage: /api/movies/randomlist/:length&apiToken=
@@ -26,6 +28,11 @@ router.get("/search", verifyToken, (req, res) => {
 // usage : /api/movies/getmovie?title=&id=&apiToken=
 router.get("/getmovie", verifyToken, (req, res) => {
     getmovie(req, res)
+}
+);
+
+router.get("/docs", (req, res) => {
+    res.sendFile(path.join(__dirname, './views/endpoints.html'));
 }
 );
 

@@ -1,7 +1,9 @@
 import passport from "passport";
 import {Strategy} from 'passport-google-oauth20';
 import { User } from "../models/user.js";
+import { decryptToken } from "../utils/decryptToken.js";
 import { generateToken, hashToken } from "../utils/generateToken.js";
+import { body, validationResult } from "express-validator";
 
 
 // google strategy to register users
@@ -58,3 +60,37 @@ passport.serializeUser(function(user, cb){
 passport.deserializeUser(function (user, cb){
     cb(null, user);
 })
+
+// register new user with email, password and username
+const newRegister = (req, res) => {
+  let apiKey = generateToken();
+  let hashApiKey = hashToken(apiKey);
+  if(!req.body.username||!req.body.password||!req.body.email){
+    return res.status(400).json({'error':'missing required fields'})
+  }
+  User.findOne({email: req.body.email}, async function(err, user){
+    if(err){
+      return res.status(500).json({error: err})
+    }
+    if(user){
+      return res.status(200).json({message: "User already exists", apikey: decryptToken(user.apiKey)})
+    }
+    let newUser = new User({
+      googleId: req.body.email,
+      email: req.body.email,
+      name: {
+        firstName: req.body.username,
+      },
+      apiKey: hashApiKey,
+    })
+    try{
+        newUser.save();
+      return res.status(200).json({'apikey':apiKey, 'user':newUser.email})
+    }catch(err){
+      return res.status(500).json({error: err})
+    }
+  }
+  )
+}
+
+export {newRegister}

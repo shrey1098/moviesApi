@@ -55,7 +55,7 @@ const getmovie = async (req, res) => {
     }
     function check () {
         if(movie){
-            res.status(200).json({id: movie.id, title: movie.title})
+            res.status(200).json(movie)
         }
         else{
             res.status(200).json({message:'no movie found'})

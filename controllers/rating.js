@@ -5,9 +5,11 @@ import { MovieRating } from "../models/movie_rating.js";
 
 
 // post a rating for a movie by a user
-const postRating = async (res, movieId, userId, rating) => {
+const postRating = async (req, res) => {
+    const { movieId, rating } = req.params;
+    const googleId = res.locals.googleId;
     // check if usaerId is valid
-    const user = await User.findOne({googleId: userId});
+    const user = await User.findOne({googleId: googleId});
     if (!user) {
         res.status(400).json({message:"User not found"});
     }
@@ -22,29 +24,30 @@ const postRating = async (res, movieId, userId, rating) => {
     }
     // check if user has already rated the movie
     const movieRating = await MovieRating.findOne({
-        googleId: userId,
+        googleId: googleId,
         movieId: movieId
     });
     if (movieRating) {
         // update rating
         movieRating.rating = rating;
         await movieRating.save();
-        res.status(200).json({ message: "Rating updated"});
+        res.status(200).json({ message: "Rating updated", data: movieRating });
     }
     // create a new movie rating
     else{
     const newMovieRating = new MovieRating({
-        googleId: userId,
+        googleId: googleId,
         movieId: movieId,
         rating: rating
     });
     // save the movie rating
     await newMovieRating.save();
-    res.status(200).json({ message: "Rating saved"});
+    res.status(200).json({ message: "Rating saved", data: newMovieRating });
 }
 }
 
-const getAverageRating = async (res, movieId) => {
+const getAverageRating = async (req, res) => {
+    const { movieId } = req.params;
     // get all movie ratings for a movie
     const movieRatings = await MovieRating.find({movieId: movieId});
     const movie = await Movie.findOne({id: movieId});
@@ -64,7 +67,8 @@ const getAverageRating = async (res, movieId) => {
             for (let i = 0; i < movieRatings.length; i++) {
                 sum += movieRatings[i].rating;
             }
-            const averageRating = sum / movieRatings.length;
+            // limit to 2 decimal places
+            const averageRating = Math.round((sum / movieRatings.length) * 100) / 100;
             res.status(200).json({Title: movie.title, averageRating: averageRating});
         }
     }

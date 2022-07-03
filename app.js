@@ -1,8 +1,10 @@
 //imports
 import dotenv from 'dotenv';
-import express from "express";
+import express, { urlencoded } from "express";
 import 'dotenv/config';
 import { connectDB } from "./db/connect.js";
+import path from 'path';
+import bodyParser from 'body-parser';
 //route imports
 import { authRouter } from "./routes/auth.js";
 import { postRatingRouter } from './routes/rating.js';
@@ -17,24 +19,30 @@ import { PostData } from './moviesDB.js';
 
 const app = express();
 
+
 //middleware
+app.use(morgan('tiny'))
 app.use(session({secret:'cats'}))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(cors())
-app.use(express.urlencoded({extended:true}))
 app.use(express.json())
-app.use(morgan('tiny'))
+app.use(express.urlencoded())
 
 
 
 
+const __dirname = path.resolve(path.dirname('')); 
+app.get('/', (req, res) => {
+    // render index.html
+    res.sendFile(path.join(__dirname, './views/index.html'));
+}
+);
 
 // routes-
-app.use('/api/auth', authRouter);
+app.use('/auth', authRouter);
 app.use('/api/rating', postRatingRouter);
 app.use('/api/movies', movie_listsRouter);
-
 
 
 //route to post movie data from tmdb database
