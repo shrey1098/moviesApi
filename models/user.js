@@ -9,6 +9,7 @@ email: {
 type: String, required:true,
 },
 apiKey:{type:String},
+password:{type:String, required:false},
 });
 
 const userModel = mongoose.model('User', userSchema);

@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
 import ('../controllers/auth.js')
-import { newRegister } from "../controllers/auth.js";
+import { newRegister, login } from "../controllers/auth.js";
 import { decryptToken } from "../utils/decryptToken.js";
 import path from 'path';
 const router = express.Router()
@@ -11,11 +11,17 @@ const __dirname = path.resolve(path.dirname(''));
 router.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, './views/register.html')); 
 })
-
+router.get('/loginpage', (req, res) => {
+    res.sendFile(path.join(__dirname, './views/login.html')); 
+})
+// registers user with di and password
 router.post('/newRegister', (req, res) => {
   newRegister(req, res);
 })
-
+//login user with id and password
+router.post('/login', (req, res) => {
+  login(req, res);
+})
 // google strategy route to register users
 router.get('/google', passport.authenticate('google',
  {scope: ['openid','profile', 'email'], passReqToCallback:true})

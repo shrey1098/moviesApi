@@ -2,7 +2,7 @@ import { User } from "../models/user.js";
 import { hashToken } from "../utils/generateToken.js";
 
 const verifyToken = (req, res, next) => {
-    const apiToken = req.param('apiToken');
+    const apiToken = req.query.apiToken;
     if (apiToken){
         // encrypt user token and compare with the one in the DB
         const hToken = hashToken(apiToken)

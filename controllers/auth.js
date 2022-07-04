@@ -65,6 +65,7 @@ passport.deserializeUser(function (user, cb){
 const newRegister = (req, res) => {
   let apiKey = generateToken();
   let hashApiKey = hashToken(apiKey);
+  let hashpassword = hashToken(req.body.password);
   if(!req.body.username||!req.body.password||!req.body.email){
     return res.status(400).json({'error':'missing required fields'})
   }
@@ -82,6 +83,7 @@ const newRegister = (req, res) => {
         firstName: req.body.username,
       },
       apiKey: hashApiKey,
+      password: hashpassword,
     })
     try{
         newUser.save();
@@ -93,4 +95,24 @@ const newRegister = (req, res) => {
   )
 }
 
-export {newRegister}
+const login = (req, res) => {
+  if(!req.body.email||!req.body.password){
+    return res.status(400).json({'error':'missing required fields'})
+  }
+  User.findOne({email: req.body.email}, async function(err, user){
+    if(err){
+      return res.status(500).json({error: err})
+    }
+    if(!user){
+      return res.status(200).json({message: "User not found"})
+    }
+    if(user.password!==hashToken(req.body.password)){
+      return res.status(200).json({message: "Wrong password"})
+    }
+    return res.status(200).json({'apikey':decryptToken(user.apiKey), 'user':user})
+  }
+  )
+}
+
+
+export {newRegister, login};

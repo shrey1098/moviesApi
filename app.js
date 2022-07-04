@@ -39,6 +39,11 @@ app.get('/', (req, res) => {
 }
 );
 
+app.get('/about', (req, res) => {
+    res.sendFile(path.join(__dirname, './views/about_developer.html'));
+}
+);
+
 // routes-
 app.use('/auth', authRouter);
 app.use('/api/rating', postRatingRouter);

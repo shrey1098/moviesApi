@@ -7,7 +7,6 @@
     <title>Home</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -24,10 +23,13 @@
                     <a class="nav-link" href="/">Home </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/api/movies/docs">Endpoints<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/api/movies/docs">Docs<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About Developer</a>
+                    <a class="nav-link" href="/auth/loginpage">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About Developer</a>
                 </li>
             </ul>
         </div>
@@ -223,7 +225,7 @@
                             <strong>Try it:</strong>
                             <br>
                             <br>
-                            <p>search movies with titile contains-dogs and genre-comedy</p>
+                            <p>search movies with titile contains-<strong>dogs</strong> and genre-<strong>comedy</strong></p>
                             <!-- button linked to /api/movies/search-->
                             <a href="/api/movies/search?apiToken=r~8x0ydeEFvhiIq/whizEFGyj&title=dog&genre=comedy"
                                 class="btn btn-primary">Search Movies</a>

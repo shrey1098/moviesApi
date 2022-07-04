@@ -5,8 +5,8 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "run": "node index.js",
-    "dev": "nodemon index.js"
+    "run": "node app.js",
+    "dev": "nodemon app.js"
   },
   "author": "shrey1098",
   "license": "ISC",
