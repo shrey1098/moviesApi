@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { Movie } from "./models/movie.js";
 import fetch from "node-fetch";
 
@@ -27,19 +26,22 @@ const PostData = () => {
     movieIds.forEach(id => {
         getData(id).then(data => {
             console.log(id)
-            if(data.id === undefined){
+            if(data === undefined){
                 console.log('movie not found')
                 
             }
             else{
-                if (data.genres.length === 0) {
-                    
+                if (data.genres=== undefined) {
                     console.log('no genres')
                     var genres = "no genres"
                 }
                 else {
                     var genres = data.genres[0].name
                 }
+                if (Movie.findOne({ id: data.id })) {
+                    console.log('movie already exists')
+                }
+                else {
                 const movie = new Movie({
                     id: data.id || id,
                     title: data.title,
@@ -49,6 +51,7 @@ const PostData = () => {
                     overview: data.overview || "No overview available",
                 });
                 movie.save();
+            }
         }
         }
         );

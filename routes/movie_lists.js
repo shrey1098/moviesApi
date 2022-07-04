@@ -1,5 +1,5 @@
 import express from 'express';
-import { verifyToken } from '../middlewres/verifyToken.js';
+import { verifyToken } from '../middlewares/verifyToken.js';
 import { randomlist, search, getmovie } from '../controllers/movie_lists.js';
 
 import path from 'path';

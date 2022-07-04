@@ -7,9 +7,8 @@ import { body, validationResult } from "express-validator";
 
 
 // google strategy to register users
-
 const GoogleStrategy = Strategy;
-
+// client id and client secret are stored in .env file
 const GOOGLE_CLIENT_ID = "446858865452-1qfls9dstlg3bupcn7hpruu6jsiip66v.apps.googleusercontent.com"
 const GOOGLE_CLIENT_SECRET = "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"
 
@@ -20,15 +19,16 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
       //console.log(cb)
-      // api key is sent to the user
+      // api key is sent to the user as response
       let apiKey = generateToken()
       // encrypted api key is saved to the DB
       let hashApiKey = hashToken(apiKey)
+      // find user by googleId
       User.findOne({ googleId: profile.id }, async function (err, user) {
         if (err) {
           return cb(err)
         }
-        // Create new user
+        // if user doesnt exist in db Create new user
         if(!user) {
         user = new User({
             googleId: profile.id,
@@ -65,10 +65,13 @@ passport.deserializeUser(function (user, cb){
 const newRegister = (req, res) => {
   let apiKey = generateToken();
   let hashApiKey = hashToken(apiKey);
+  // encrypt password
   let hashpassword = hashToken(req.body.password);
+  // check if user.body is valid
   if(!req.body.username||!req.body.password||!req.body.email){
     return res.status(400).json({'error':'missing required fields'})
   }
+  // check if user already exists
   User.findOne({email: req.body.email}, async function(err, user){
     if(err){
       return res.status(500).json({error: err})
@@ -76,6 +79,7 @@ const newRegister = (req, res) => {
     if(user){
       return res.status(200).json({message: "User already exists", apikey: decryptToken(user.apiKey)})
     }
+    // create new user
     let newUser = new User({
       googleId: req.body.email,
       email: req.body.email,

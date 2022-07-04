@@ -8,13 +8,15 @@ const router = express.Router()
 
 const __dirname = path.resolve(path.dirname('')); 
 
+// register page - render register.html
 router.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, './views/register.html')); 
 })
+// loginpage - render login.html
 router.get('/loginpage', (req, res) => {
     res.sendFile(path.join(__dirname, './views/login.html')); 
 })
-// registers user with di and password
+// registers user with username, id and password
 router.post('/newRegister', (req, res) => {
   newRegister(req, res);
 })
@@ -26,7 +28,7 @@ router.post('/login', (req, res) => {
 router.get('/google', passport.authenticate('google',
  {scope: ['openid','profile', 'email'], passReqToCallback:true})
  )
-
+// google registration callback route
  router.get('/google/callback', 
   passport.authenticate('google', { failureRedirect: '/google' }),
   (req, res)=> {

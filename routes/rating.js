@@ -1,5 +1,5 @@
 import express from "express";
-import { verifyToken } from "../middlewres/verifyToken.js";
+import { verifyToken } from "../middlewares/verifyToken.js";
 import { postRating, getAverageRating } from "../controllers/rating.js";
 
 const router = express.Router();

@@ -1,33 +1,34 @@
 //imports
-import dotenv from 'dotenv';
 import express, { urlencoded } from "express";
 import 'dotenv/config';
 import { connectDB } from "./db/connect.js";
 import path from 'path';
-import bodyParser from 'body-parser';
-//route imports
-import { authRouter } from "./routes/auth.js";
-import { postRatingRouter } from './routes/rating.js';
-import { movie_listsRouter } from './routes/movie_lists.js';
-
-
 import passport from "passport";
 import session from "express-session";
 import cors from "cors";
 import morgan from "morgan";
+//route imports
+import { authRouter } from "./routes/auth.js";
+import { postRatingRouter } from './routes/rating.js';
+import { movie_listsRouter } from './routes/movie_lists.js';
 import { PostData } from './moviesDB.js';
+
+
+
 
 const app = express();
 
 
 //middleware
 app.use(morgan('tiny'))
-app.use(session({secret:'cats'}))
+app.use(session({secret:'cats',
+                resave: true,
+                saveUninitialized: true}))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(cors())
 app.use(express.json())
-app.use(express.urlencoded())
+app.use(express.urlencoded({ extended: true }));
 
 
 
@@ -38,7 +39,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './views/index.html'));
 }
 );
-
+// about page
 app.get('/about', (req, res) => {
     res.sendFile(path.join(__dirname, './views/about_developer.html'));
 }
